@@ -1,3 +1,3 @@
-# the-veggie-brothers
+# The Veggie Brothers - Fresh Produce, Delivered to Your Doorstep
 
-Fresh produce delivery app for The Veggie Brothers.
+A work-in-progress fresh produce delivery app for The Veggie Brothers.
