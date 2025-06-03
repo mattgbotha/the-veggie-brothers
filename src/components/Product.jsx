@@ -9,7 +9,7 @@ function Product({ product, onAddToCart }) {
         <img
           src={product.image}
           alt={product.name}
-          className="w-80 h-80 object-contain mx-auto"
+          className="w-60 h-60 object-contain mx-auto"
         />
         <h3 className="font-medium text-gray-900 text-sm">{name}</h3>
       </div>
