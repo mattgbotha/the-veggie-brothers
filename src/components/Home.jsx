@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Clock, Truck } from "lucide-react";
 import Header from "./Header";
 import ProductList from "./ProductList";
+import Cart from "./Cart";
 
 function Home() {
   const [cart, setCart] = useState([]);
@@ -25,6 +26,27 @@ function Home() {
 
   const handleToggleCart = () => {
     setIsCartOpen(!isCartOpen);
+  };
+
+  const handleUpdateQuantity = (productId, newQuantity) => {
+    if (newQuantity === 0) {
+      handleRemoveItem(productId);
+      return;
+    }
+
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === productId ? { ...item, quanity: newQuantity } : item
+      )
+    );
+  };
+
+  const handleRemoveItem = (productId) => {
+    setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
+  };
+
+  const handleCloseCart = () => {
+    setIsCartOpen(false);
   };
 
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
@@ -63,6 +85,13 @@ function Home() {
       </div>
 
       <ProductList onAddToCart={handleAddToCart} />
+      <Cart
+        cart={cart}
+        onUpdateQuantity={handleUpdateQuantity}
+        onRemoveItem={handleRemoveItem}
+        isOpen={isCartOpen}
+        onClose={handleCloseCart}
+      />
     </div>
   );
 }
