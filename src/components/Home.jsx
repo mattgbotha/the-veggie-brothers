@@ -5,6 +5,7 @@ import ProductList from "./ProductList";
 
 function Home() {
   const [cart, setCart] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const handleAddToCart = (product) => {
     setCart((prevCart) => {
@@ -22,11 +23,15 @@ function Home() {
     });
   };
 
+  const handleToggleCart = () => {
+    setIsCartOpen(!isCartOpen);
+  };
+
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <div className="min-h-screen bg-green-50">
-      <Header cartCount={cartCount} />
+      <Header cartCount={cartCount} onCartClick={handleToggleCart} />
 
       {/* Hero Section */}
       <section className="px-4 py-8">
