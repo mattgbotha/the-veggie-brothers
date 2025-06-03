@@ -6,7 +6,11 @@ function Product({ product, onAddToCart }) {
   return (
     <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
       <div className="text-center mb-3">
-        <div className="text-4xl mb-2">{image}</div>
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-80 h-80 object-contain"
+        />
         <h3 className="font-medium text-gray-900 text-sm">{name}</h3>
       </div>
       <div className="text-center mb-3">
