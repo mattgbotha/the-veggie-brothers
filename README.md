@@ -3,7 +3,6 @@
 [![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white&style=flat-square)](https://vitejs.dev/)
 [![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB&style=flat-square)](https://reactjs.org/)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38B2AC?logo=tailwindcss&logoColor=white&style=flat-square)](https://tailwindcss.com/)
-[![License](https://img.shields.io/github/license/mattgbotha/the-veggie-brothers?style=flat-square)](LICENSE)
 
 Welcome to **The Veggie Brothers** online store 🌽🍓🍌  
 Delivering **local**, **seasonal**, **farm-fresh**, and **organic** fruits, vegetables, and herbs straight to your doorstep 🚛💨
