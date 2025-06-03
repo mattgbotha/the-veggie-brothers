@@ -1,6 +1,6 @@
 import { ShoppingCart, Leaf } from "lucide-react";
 
-function Header({ cartCount }) {
+function Header({ cartCount, onCartClick }) {
   return (
     <header className="bg-white shadow-md">
       <div className="px-4 py-4">
@@ -16,16 +16,19 @@ function Header({ cartCount }) {
               <p className="text-xs text-gray-600">Fresh • Local • Delivered</p>
             </div>
           </div>
-          <div className="relative ml-auto">
-            <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
-              <ShoppingCart className="w-6 h-6 text-white" />
+          <button
+            onClick={onCartClick}
+            className="relative ml-auto hover:bg-gray-100 rounded-full p-2 transition-colors"
+          >
+            <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center cursor-pointer">
+              <ShoppingCart className="w-5 h-5 text-white" />
             </div>
             {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-semibold">
+              <span className="absolute -top-0 -right-0 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-semibold cursor-pointer">
                 {cartCount}
               </span>
             )}
-          </div>
+          </button>
         </div>
       </div>
     </header>
