@@ -1,4 +1,4 @@
-import { X, Plus, Minus, ShoppingBag } from "lucide-react";
+import { X, Plus, Minus, ShoppingBag, Truck } from "lucide-react";
 
 function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
   const totalPrice = cart.reduce(
@@ -38,7 +38,7 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
             <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
               <ShoppingBag className="w-16 h-16 text-gray-300 mb-4" />
               <h3 className="text-lg font-medium text-gray-900 mb-2">
-                Your cart is empty.
+                Your cart is empty
               </h3>
               <p className="text-gray-500 mb-6">
                 Add some items to get started!
@@ -71,7 +71,7 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
                         {item.name}
                       </h4>
                       <p className="text-green-600 font-semibold text-sm">
-                        R{item.price}
+                        R{(item.price * item.quantity).toFixed(2)}
                       </p>
                     </div>
 
@@ -112,7 +112,26 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
                 ))}
               </div>
 
-              <div className="border-t border-gray-200 p-4">Footer content</div>
+              <div className="border-t border-gray-200 p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-gray-700 font-medium">Total</span>
+                  <span className="text-xl font-bold text-green-600">
+                    R{totalPrice.toFixed(2)}
+                  </span>
+                </div>
+                {totalPrice >= 300 && (
+                  <div className="text-green-700 text-xs mb-2 flex items-center space-x-1">
+                    <Truck className="w-4 h-4" />
+                    <span>Free delivery unlocked!</span>
+                  </div>
+                )}
+                <button
+                  className="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-semibold text-lg transition-colors mt-2"
+                  onClick={() => alert("Checkout coming soon!")}
+                >
+                  Checkout
+                </button>
+              </div>
             </>
           )}
         </div>
