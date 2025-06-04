@@ -1,4 +1,4 @@
-import { X, Plus, Minus, ShoppingBag, Truck } from "lucide-react";
+import { X, Plus, Minus, ShoppingBag, Truck, CreditCard } from "lucide-react";
 
 function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
   const totalPrice = cart.reduce(
@@ -17,7 +17,7 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
       ></div>
 
       {/* Cart Panel */}
-      <div className="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-xl">
+      <div className="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-xl flex flex-col">
         {/* Cart Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
           <h2 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
@@ -33,7 +33,7 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
         </div>
 
         {/* Cart Content */}
-        <div className="flex flex-col h-full">
+        <div className="flex-1 flex flex-col">
           {cart.length === 0 ? (
             <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
               <ShoppingBag className="w-16 h-16 text-gray-300 mb-4" />
@@ -126,9 +126,10 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
                   </div>
                 )}
                 <button
-                  className="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-semibold text-lg transition-colors mt-2"
+                  className="w-full flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-semibold text-lg transition-colors mt-4 shadow"
                   onClick={() => alert("Checkout coming soon!")}
                 >
+                  <CreditCard className="w-5 h-5" />
                   Checkout
                 </button>
               </div>
