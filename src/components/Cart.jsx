@@ -1,12 +1,35 @@
+import { useEffect, useState } from "react";
 import { X, Plus, Minus, ShoppingBag, Truck, CreditCard } from "lucide-react";
 
 function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
+  const [showPanel, setShowPanel] = useState(false);
+  const [animateIn, setAnimateIn] = useState(false);
+
+  // Handle mounting/unmounting
+  useEffect(() => {
+    if (isOpen) {
+      setShowPanel(true); // Mount panel, but don't animate yet
+    } else {
+      setAnimateIn(false); // Start slide-out
+      const timeout = setTimeout(() => setShowPanel(false), 300);
+      return () => clearTimeout(timeout);
+    }
+  }, [isOpen]);
+
+  // Handle slide-in after mount
+  useEffect(() => {
+    if (showPanel && isOpen) {
+      // Next tick, trigger slide-in
+      requestAnimationFrame(() => setAnimateIn(true));
+    }
+  }, [showPanel, isOpen]);
+
+  if (!showPanel) return null;
+
   const totalPrice = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
-
-  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50">
@@ -17,7 +40,13 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
       ></div>
 
       {/* Cart Panel */}
-      <div className="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-xl flex flex-col">
+      <div
+        className={`
+          absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-xl flex flex-col
+          transition-transform duration-300
+          ${animateIn ? "translate-x-0" : "translate-x-full"}
+        `}
+      >
         {/* Cart Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
           <h2 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
