@@ -8,7 +8,7 @@ function Product({ product, onAddToCart }) {
       <img
         src={image}
         alt={name}
-        className="w-32 h-32 object-contain rounded-xl mb-3 bg-white group-hover:scale-105 transition-transform duration-200"
+        className="w-32 h-32 object-contain rounded-xl mb-3 bg-white group-hover:scale-110 transition-transform duration-200"
       />
       <h3 className="text-lg font-semibold text-gray-900 text-center">
         {name}
