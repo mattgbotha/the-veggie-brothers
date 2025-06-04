@@ -87,7 +87,7 @@ function Home() {
                 </span>
                 <span className="inline-flex items-center bg-green-100 text-green-800 font-semibold px-4 py-1 rounded-full text-sm shadow">
                   <Clock className="w-4 h-4 mr-2" />
-                  Under 30 Minutes
+                  Under 60 Minutes
                 </span>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
