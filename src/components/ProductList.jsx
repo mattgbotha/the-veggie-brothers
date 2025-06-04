@@ -17,13 +17,14 @@ import redOnionImg from "../assets/images/red-onion.png";
 import lemonImg from "../assets/images/lemon.png";
 import broccoliImg from "../assets/images/broccoli.png";
 import pineappleImg from "../assets/images/pineapple.png";
+import { Leaf } from "lucide-react"; // Decorative icon
 
 function ProductList({ onAddToCart }) {
   // Sample product data
   const products = [
     {
       id: 1,
-      name: "Ripe Avocados",
+      name: "Avocados",
       price: 20,
       image: avocadoImg,
       unitText: "each",
@@ -31,7 +32,7 @@ function ProductList({ onAddToCart }) {
     },
     {
       id: 2,
-      name: "Fresh Spinach",
+      name: "Spinach",
       price: 30,
       image: spinachImg,
       unitText: "per bunch",
@@ -39,7 +40,7 @@ function ProductList({ onAddToCart }) {
     },
     {
       id: 3,
-      name: "Sweet Strawberries",
+      name: "Strawberries",
       price: 90,
       image: strawberryImg,
       unitText: "per kg",
@@ -47,23 +48,23 @@ function ProductList({ onAddToCart }) {
     },
     {
       id: 4,
-      name: "Roma Tomatoes",
+      name: "Tomatoes",
       price: 25,
       image: tomatoImg,
       unitText: "per kg",
-      description: "Fresh Roma tomatoes, ideal for sauces and salads.",
+      description: "Fresh tomatoes, ideal for sauces and salads.",
     },
     {
       id: 5,
-      name: "Organic Bananas",
+      name: "Bananas",
       price: 25,
       image: bananaImg,
       unitText: "per kg",
-      description: "Sweet and ripe organic bananas.",
+      description: "Sweet and ripe bananas.",
     },
     {
       id: 6,
-      name: "Cling Peaches",
+      name: "Peaches",
       price: 10,
       image: peachImg,
       unitText: "each",
@@ -172,10 +173,19 @@ function ProductList({ onAddToCart }) {
   ];
 
   return (
-    <div className="px-4 py-6">
-      <h2 className="text-lg font-semibold text-gray-900 mb-4">
-        Fresh Products
-      </h2>
+    <section className="bg-gray-50 px-8 py-8 sm:py-12 border-t border-gray-200">
+      <div className="mb-8 text-center">
+        <div className="flex justify-center mb-2">
+          <Leaf className="w-8 h-8 text-green-600 animate-bounce" />
+        </div>
+        <h2 className="text-3xl font-extrabold text-green-600 tracking-tight animate-fade-in-down transition-all duration-700">
+          Discover Our Freshest Picks
+        </h2>
+        <div className="mx-auto mt-2 mb-2 h-1 w-20 rounded bg-green-500"></div>
+        <p className="text-base text-gray-500">
+          Hand-selected fruits, veggies, and herbs delivered to your door.
+        </p>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         {products.map((product) => (
           <Product
@@ -185,7 +195,7 @@ function ProductList({ onAddToCart }) {
           />
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 
