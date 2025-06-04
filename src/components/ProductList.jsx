@@ -5,6 +5,18 @@ import strawberryImg from "../assets/images/strawberries.png";
 import tomatoImg from "../assets/images/tomatoes.png";
 import bananaImg from "../assets/images/bananas.png";
 import peachImg from "../assets/images/peaches.png";
+import blueberryImg from "../assets/images/blueberries.png";
+import carrotImg from "../assets/images/carrots.png";
+import redPepperImg from "../assets/images/red-pepper.png";
+import cucumberImg from "../assets/images/cucumber.png";
+import basilImg from "../assets/images/basil.png";
+import cherryTomatoImg from "../assets/images/cherry-tomato.png";
+import greenBeansImg from "../assets/images/beans.png";
+import corianderImg from "../assets/images/coriander.png";
+import redOnionImg from "../assets/images/red-onion.png";
+import lemonImg from "../assets/images/lemon.png";
+import broccoliImg from "../assets/images/broccoli.png";
+import pineappleImg from "../assets/images/pineapple.png";
 
 function ProductList({ onAddToCart }) {
   // Sample product data
@@ -56,6 +68,106 @@ function ProductList({ onAddToCart }) {
       image: peachImg,
       unitText: "each",
       description: "Succulent peaches, perfect for snacking.",
+    },
+    {
+      id: 7,
+      name: "Blueberries",
+      price: 60,
+      image: blueberryImg,
+      unitText: "per punnet",
+      description:
+        "Plump, antioxidant-rich blueberries for breakfast or baking.",
+    },
+    {
+      id: 8,
+      name: "Baby Carrots",
+      price: 20,
+      image: carrotImg,
+      unitText: "per bag",
+      description:
+        "Crunchy and sweet baby carrots, great for snacks or salads.",
+    },
+    {
+      id: 9,
+      name: "Red Bell Peppers",
+      price: 18,
+      image: redPepperImg,
+      unitText: "each",
+      description:
+        "Crisp and vibrant red peppers, perfect for roasting or salads.",
+    },
+    {
+      id: 10,
+      name: "English Cucumbers",
+      price: 15,
+      image: cucumberImg,
+      unitText: "each",
+      description: "Long, seedless cucumbers, ideal for fresh salads.",
+    },
+    {
+      id: 11,
+      name: "Fresh Basil",
+      price: 20,
+      image: basilImg,
+      unitText: "per bunch",
+      description:
+        "Aromatic basil leaves, perfect for pesto and Italian dishes.",
+    },
+    {
+      id: 12,
+      name: "Cherry Tomatoes",
+      price: 35,
+      image: cherryTomatoImg,
+      unitText: "per punnet",
+      description: "Sweet cherry tomatoes, great for snacking or salads.",
+    },
+    {
+      id: 14,
+      name: "Green Beans",
+      price: 30,
+      image: greenBeansImg,
+      unitText: "per 500g",
+      description: "Tender green beans, delicious steamed or stir-fried.",
+    },
+    {
+      id: 15,
+      name: "Coriander",
+      price: 15,
+      image: corianderImg,
+      unitText: "per bunch",
+      description: "Fresh coriander, essential for curries and salsas.",
+    },
+    {
+      id: 16,
+      name: "Red Onions",
+      price: 12,
+      image: redOnionImg,
+      unitText: "each",
+      description: "Mild and sweet red onions, great raw or cooked.",
+    },
+    {
+      id: 17,
+      name: "Lemons",
+      price: 8,
+      image: lemonImg,
+      unitText: "each",
+      description: "Juicy lemons, perfect for zesting or fresh lemonade.",
+    },
+    {
+      id: 18,
+      name: "Broccoli",
+      price: 35,
+      image: broccoliImg,
+      unitText: "per head",
+      description: "Fresh broccoli, packed with nutrients and flavor.",
+    },
+    {
+      id: 20,
+      name: "Pineapple",
+      price: 45,
+      image: pineappleImg,
+      unitText: "each",
+      description: "Sweet and tangy pineapple, great for desserts or juicing.",
     },
   ];
 
