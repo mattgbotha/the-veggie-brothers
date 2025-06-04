@@ -11,7 +11,8 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
   return (
     <div className="fixed inset-0 z-50">
       <div
-        className="absolute inset-0 bg-black bg-opacity-50"
+        className="absolute inset-0 bg-black"
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
         onClick={onClose}
       ></div>
 
@@ -53,61 +54,61 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
             <>
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 {cart.map((item) => (
-                  <>
-                    {/* Item Info */}
-                    <div
-                      key={item.id}
-                      className="flex items-center space-x-3 bg-gray-50 rounded-lg p-3"
-                    >
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-16 h-16 object-contain rounded-lg bg-white"
-                      />
+                  <div
+                    key={item.id}
+                    className="flex items-center space-x-3 bg-gray-50 rounded-lg p-3"
+                  >
+                    {/* Product Image */}
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-12 h-12 object-contain rounded-lg bg-white"
+                    />
 
-                      <div className="flex-1">
-                        <h4 className="font-medium text-gray-900 text-sm">
-                          {item.name}
-                        </h4>
-                        <p className="text-green-600 font-semibold">
-                          R{item.price}
-                        </p>
-                      </div>
+                    {/* Product Info */}
+                    <div className="flex-1">
+                      <h4 className="font-medium text-gray-900 text-sm">
+                        {item.name}
+                      </h4>
+                      <p className="text-green-600 font-semibold text-sm">
+                        R{item.price}
+                      </p>
                     </div>
 
-                    {/* Quantity Controls */}
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-1">
+                      {/* Minus Button */}
                       <button
-                        onClick={() =>
-                          onUpdateQuantity(item.id, item.quantity - 1)
-                        }
-                        className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
+                        onClick={() => {
+                          onUpdateQuantity(item.id, item.quantity - 1);
+                        }}
+                        className="w-6 h-6 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
                       >
-                        <Minus className="w-4 h-4 text-gray-600" />
+                        <Minus className="w-3 h-3 text-gray-600" />
                       </button>
 
-                      <span className="w-8 text-center font-medium text-gray-900">
+                      <span className="w-6 text-center font-medium text-gray-900 text-sm">
                         {item.quantity}
                       </span>
 
+                      {/* Plus Button */}
                       <button
-                        onClick={() =>
-                          onUpdateQuantity(item.id, item.quantity + 1)
-                        }
-                        className="w-8 h-8 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center transition-colors"
+                        onClick={() => {
+                          onUpdateQuantity(item.id, item.quantity + 1);
+                        }}
+                        className="w-6 h-6 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center transition-colors"
                       >
-                        <Plus className="w-4 h-4 text-white" />
+                        <Plus className="w-3 h-3 text-white" />
+                      </button>
+
+                      {/* Remove Button */}
+                      <button
+                        onClick={() => onRemoveItem(item.id)}
+                        className="w-6 h-6 rounded-full bg-red-100 hover:bg-red-200 flex items-center justify-center transition-colors ml-2"
+                      >
+                        <X className="w-3 h-3 text-red-500" />
                       </button>
                     </div>
-
-                    {/* Remove Button */}
-                    <button
-                      onClick={() => onRemoveItem(item.id)}
-                      className="p-1 hover:bg-red-100 rounded-full transition-colors"
-                    >
-                      <X className="w-4 h-4 text-red-500" />
-                    </button>
-                  </>
+                  </div>
                 ))}
               </div>
 

@@ -36,7 +36,7 @@ function Home() {
 
     setCart((prevCart) =>
       prevCart.map((item) =>
-        item.id === productId ? { ...item, quanity: newQuantity } : item
+        item.id === productId ? { ...item, quantity: newQuantity } : item
       )
     );
   };
