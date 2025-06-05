@@ -5,15 +5,19 @@ function Header({ cartCount, onCartClick }) {
     <header className="sticky top-0 z-50 bg-white shadow-md">
       <div className="px-4 py-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 cursor-pointer">
             <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center">
               <Leaf className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">
-                The Veggie Brothers
+              <h1 className="text-2xl font-bold text-green-700 tracking-tight leading-tight">
+                <span className="text-gray-800">The </span>
+                <span className="text-green-600">Veggie </span>
+                <span className="text-gray-800">Brothers</span>
               </h1>
-              <p className="text-xs text-gray-600">Fresh • Local • Delivered</p>
+              <p className="text-sm text-emerald-700 font-medium italic">
+                Farm-fresh produce, delivered to your door.
+              </p>
             </div>
           </div>
           <button
