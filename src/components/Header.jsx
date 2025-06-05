@@ -11,19 +11,53 @@ import {
   Mail,
 } from "lucide-react";
 
-function Header({ cartCount, onCartClick, onProductsClick }) {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [currentHash, setCurrentHash] = useState(
-    typeof window !== "undefined" ? window.location.hash : ""
-  );
+function useActiveSection(sectionIds, offset = 80) {
+  const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
-    const handleHashChange = () => {
-      setCurrentHash(window.location.hash);
+    const observers = [];
+    sectionIds.forEach(({ id, name }) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const observer = new window.IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveSection(name);
+        },
+        {
+          root: null,
+          rootMargin: `-${offset}px 0px 0px 0px`,
+          threshold: 0.2,
+        }
+      );
+      observer.observe(el);
+      observers.push(observer);
+    });
+
+    // Home section: top of page
+    const onScroll = () => {
+      if (window.scrollY < 100) setActiveSection("home");
     };
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
-  }, []);
+    window.addEventListener("scroll", onScroll);
+
+    return () => {
+      observers.forEach((o) => o.disconnect());
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [sectionIds, offset]);
+
+  return activeSection;
+}
+
+function Header({ cartCount, onCartClick, onProductsClick, onHomeClick }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Track which section is active
+  const activeSection = useActiveSection([
+    { id: "product-list", name: "products" },
+    { id: "how-it-works", name: "how-it-works" },
+    { id: "about-us", name: "about-us" },
+    { id: "contact", name: "contact" },
+  ]);
 
   // Nav link data
   const navLinks = [
@@ -31,34 +65,70 @@ function Header({ cartCount, onCartClick, onProductsClick }) {
       label: "Home",
       href: "#",
       icon: <HomeIcon className="w-4 h-4 mr-2" />,
-      match: (hash) => hash === "" || hash === "#",
+      match: () => activeSection === "home",
+      onClick: onHomeClick,
     },
     {
       label: "Products",
       href: "#product-list",
       icon: <ShoppingBag className="w-4 h-4 mr-2" />,
-      match: (hash) => hash === "#product-list",
-      isProducts: true, // <-- Add this flag
+      match: () => activeSection === "products",
+      onClick: onProductsClick,
     },
     {
       label: "How It Works",
       href: "#how-it-works",
       icon: <Info className="w-4 h-4 mr-2" />,
-      match: (hash) => hash === "#how-it-works",
+      match: () => activeSection === "how-it-works",
     },
     {
       label: "About Us",
       href: "#about-us",
       icon: <Users className="w-4 h-4 mr-2" />,
-      match: (hash) => hash === "#about-us",
+      match: () => activeSection === "about-us",
     },
     {
       label: "Contact",
       href: "#contact",
       icon: <Mail className="w-4 h-4 mr-2" />,
-      match: (hash) => hash === "#contact",
+      match: () => activeSection === "contact",
     },
   ];
+
+  // Render nav links (desktop & mobile)
+  const renderNavLinks = (isMobile = false) =>
+    navLinks.map((link) => {
+      const isActive = link.match();
+      return (
+        <a
+          key={link.href}
+          href={link.href}
+          onClick={
+            link.onClick
+              ? (e) => {
+                  e.preventDefault();
+                  link.onClick(e);
+                  if (isMobile) setMobileOpen(false);
+                }
+              : isMobile
+              ? () => setMobileOpen(false)
+              : undefined
+          }
+          className={`flex items-center ${
+            isMobile
+              ? "text-base font-semibold px-2 py-2 rounded"
+              : "px-3 py-2 rounded-lg font-semibold"
+          } transition ${
+            isActive
+              ? "bg-green-100 text-green-700"
+              : "text-gray-700 hover:text-green-700 hover:bg-green-50"
+          }`}
+        >
+          {link.icon}
+          {link.label}
+        </a>
+      );
+    });
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-md">
@@ -83,33 +153,7 @@ function Header({ cartCount, onCartClick, onProductsClick }) {
 
           {/* Nav Links */}
           <nav className="hidden md:flex space-x-2 mx-8">
-            {navLinks.map((link) => {
-              const isActive = link.match(currentHash);
-              return (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={
-                    link.isProducts
-                      ? (e) => {
-                          e.preventDefault();
-                          onProductsClick && onProductsClick(e);
-                        }
-                      : undefined
-                  }
-                  className={`flex items-center px-3 py-2 rounded-lg font-semibold transition
-                    ${
-                      isActive
-                        ? "bg-green-100 text-green-700"
-                        : "text-gray-700 hover:text-green-700 hover:bg-green-50"
-                    }
-                  `}
-                >
-                  {link.icon}
-                  {link.label}
-                </a>
-              );
-            })}
+            {renderNavLinks(false)}
           </nav>
 
           {/* Cart Button */}
@@ -150,26 +194,7 @@ function Header({ cartCount, onCartClick, onProductsClick }) {
               <X className="w-6 h-6 text-green-700" />
             </button>
             <nav className="flex flex-col space-y-3">
-              {navLinks.map((link) => {
-                const isActive = link.match(currentHash);
-                return (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    className={`flex items-center text-base font-semibold px-2 py-2 rounded transition
-                      ${
-                        isActive
-                          ? "bg-green-100 text-green-700"
-                          : "text-gray-700 hover:text-green-700 hover:bg-green-50"
-                      }
-                    `}
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    {link.icon}
-                    {link.label}
-                  </a>
-                );
-              })}
+              {renderNavLinks(true)}
             </nav>
           </div>
           <div className="flex-1" onClick={() => setMobileOpen(false)} />

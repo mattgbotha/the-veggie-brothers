@@ -59,6 +59,11 @@ function Home() {
     }
   };
 
+  const handleHomeClick = (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
@@ -66,7 +71,8 @@ function Home() {
       <Header
         cartCount={cartCount}
         onCartClick={handleToggleCart}
-        onProductsClick={handleShopNowClick} // <-- Pass handler here
+        onProductsClick={handleShopNowClick}
+        onHomeClick={handleHomeClick}
       />
 
       {/* Hero Section */}
