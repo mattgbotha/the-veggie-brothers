@@ -50,7 +50,7 @@ function Home() {
     setIsCartOpen(false);
   };
 
-  // Smooth scroll handler for "Shop Now"
+  // Smooth scroll handler for "Shop Now" and Products nav link
   const handleShopNowClick = (e) => {
     e.preventDefault();
     const section = document.getElementById("product-list");
@@ -63,7 +63,11 @@ function Home() {
 
   return (
     <div className="min-h-screen bg-green-50">
-      <Header cartCount={cartCount} onCartClick={handleToggleCart} />
+      <Header
+        cartCount={cartCount}
+        onCartClick={handleToggleCart}
+        onProductsClick={handleShopNowClick} // <-- Pass handler here
+      />
 
       {/* Hero Section */}
       <section className="relative pb-0">

@@ -11,7 +11,7 @@ import {
   Mail,
 } from "lucide-react";
 
-function Header({ cartCount, onCartClick }) {
+function Header({ cartCount, onCartClick, onProductsClick }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [currentHash, setCurrentHash] = useState(
     typeof window !== "undefined" ? window.location.hash : ""
@@ -38,6 +38,7 @@ function Header({ cartCount, onCartClick }) {
       href: "#product-list",
       icon: <ShoppingBag className="w-4 h-4 mr-2" />,
       match: (hash) => hash === "#product-list",
+      isProducts: true, // <-- Add this flag
     },
     {
       label: "How It Works",
@@ -88,6 +89,14 @@ function Header({ cartCount, onCartClick }) {
                 <a
                   key={link.href}
                   href={link.href}
+                  onClick={
+                    link.isProducts
+                      ? (e) => {
+                          e.preventDefault();
+                          onProductsClick && onProductsClick(e);
+                        }
+                      : undefined
+                  }
                   className={`flex items-center px-3 py-2 rounded-lg font-semibold transition
                     ${
                       isActive
