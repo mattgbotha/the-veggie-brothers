@@ -20,7 +20,7 @@ function Product({ product, onAddToCart }) {
       )}
       <button
         onClick={() => onAddToCart(product)}
-        className="mt-auto w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-lg flex items-center justify-center gap-2 transition-colors shadow"
+        className="mt-auto w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-lg flex items-center justify-center gap-2 transition-colors shadow cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <Plus className="w-5 h-5" />
         Add to Cart

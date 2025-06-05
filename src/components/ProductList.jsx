@@ -173,7 +173,10 @@ function ProductList({ onAddToCart }) {
   ];
 
   return (
-    <section id="product-list" className="bg-gray-50 px-8 py-8 sm:py-12">
+    <section
+      id="product-list"
+      className="scroll-mt-14 bg-gray-50 px-8 py-8 sm:py-12"
+    >
       <div className="mb-8 text-center">
         <div className="flex justify-center mb-2">
           <Leaf className="w-8 h-8 text-green-600 animate-bounce" />
