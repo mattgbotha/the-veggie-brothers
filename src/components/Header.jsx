@@ -2,7 +2,7 @@ import { ShoppingCart, Leaf } from "lucide-react";
 
 function Header({ cartCount, onCartClick }) {
   return (
-    <header className="bg-white shadow-md">
+    <header className="sticky top-0 z-50 bg-white shadow-md">
       <div className="px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
