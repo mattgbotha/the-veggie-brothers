@@ -8,9 +8,9 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
   // Handle mounting/unmounting
   useEffect(() => {
     if (isOpen) {
-      setShowPanel(true); // Mount panel, but don't animate yet
+      setShowPanel(true);
     } else {
-      setAnimateIn(false); // Start slide-out
+      setAnimateIn(false);
       const timeout = setTimeout(() => setShowPanel(false), 300);
       return () => clearTimeout(timeout);
     }
@@ -19,7 +19,6 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
   // Handle slide-in after mount
   useEffect(() => {
     if (showPanel && isOpen) {
-      // Next tick, trigger slide-in
       requestAnimationFrame(() => setAnimateIn(true));
     }
   }, [showPanel, isOpen]);
@@ -55,7 +54,7 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
           </h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
           >
             <X className="w-5 h-5 text-gray-500" />
           </button>
@@ -74,7 +73,7 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
               </p>
               <button
                 onClick={onClose}
-                className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+                className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-medium transition-colors cursor-pointer shadow-md"
               >
                 Continue Shopping
               </button>
@@ -110,7 +109,7 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
                         onClick={() => {
                           onUpdateQuantity(item.id, item.quantity - 1);
                         }}
-                        className="w-6 h-6 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
+                        className="w-6 h-6 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <Minus className="w-3 h-3 text-gray-600" />
                       </button>
@@ -124,7 +123,7 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
                         onClick={() => {
                           onUpdateQuantity(item.id, item.quantity + 1);
                         }}
-                        className="w-6 h-6 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center transition-colors"
+                        className="w-6 h-6 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <Plus className="w-3 h-3 text-white" />
                       </button>
@@ -132,7 +131,7 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
                       {/* Remove Button */}
                       <button
                         onClick={() => onRemoveItem(item.id)}
-                        className="w-6 h-6 rounded-full bg-red-100 hover:bg-red-200 flex items-center justify-center transition-colors ml-2"
+                        className="w-6 h-6 rounded-full bg-red-100 hover:bg-red-200 flex items-center justify-center transition-colors ml-2 cursor-pointer"
                       >
                         <X className="w-3 h-3 text-red-500" />
                       </button>
@@ -141,6 +140,7 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
                 ))}
               </div>
 
+              {/* Total Section */}
               <div className="border-t border-gray-200 p-4">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-gray-700 font-medium">Total</span>
@@ -155,7 +155,7 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
                   </div>
                 )}
                 <button
-                  className="w-full flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-semibold text-lg transition-colors mt-4 shadow"
+                  className="w-full flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-semibold text-lg transition-colors mt-4 shadow-md cursor-pointer"
                   onClick={() => alert("Checkout coming soon!")}
                 >
                   <CreditCard className="w-5 h-5" />
