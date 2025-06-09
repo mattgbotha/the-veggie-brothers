@@ -91,7 +91,7 @@ function ProductModal({ product, open, onClose, onAddToCart }) {
           <button
             className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-green-500 hover:bg-green-600 text-white font-semibold shadow transition"
             onClick={() => {
-              onAddToCart({ ...product, quantity });
+              onAddToCart(product, quantity);
               onClose();
             }}
           >
