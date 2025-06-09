@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { Clock, Truck, BadgeCheck, ShoppingBag, Info } from "lucide-react";
 import Header from "./Header";
+import Footer from "./Footer";
 import ProductList from "./ProductList";
 import Cart from "./Cart";
 import UnderConstruction from "./UnderConstruction";
@@ -123,6 +124,8 @@ function Home() {
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
       />
+
+      <Footer />
     </div>
   );
 }
