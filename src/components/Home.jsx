@@ -52,7 +52,7 @@ function Home() {
       {/* Hero Section */}
       <section className="relative pb-0">
         <div className="bg-gradient-to-r from-green-500 to-emerald-600 w-full pt-16 pb-24 px-4">
-          <div className="max-w-7xl mx-auto flex flex-col items-center md:text-left text-center">
+          <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
             <div className="flex-1">
               <h1 className="text-5xl font-extrabold mb-4 drop-shadow-lg text-white">
                 Farm Fresh Delivered
@@ -74,7 +74,7 @@ function Home() {
                   Under 60 Minutes
                 </span>
               </div>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <a
                   href="#product-list"
                   onClick={handleShopNowClick}
