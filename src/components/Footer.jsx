@@ -1,38 +1,37 @@
-import { Leaf } from "lucide-react";
+import { Leaf, Facebook, Instagram } from "lucide-react";
 
 function Footer() {
   return (
-    <footer className="bg-white border-t border-green-100 mt-12">
-      <div className="max-w-7xl mx-auto px-4 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
+    <footer className="bg-white border-t border-green-100">
+      <div className="max-w-3xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-2">
-          <Leaf className="w-7 h-7 text-green-600" />
-          <span className="font-extrabold text-green-700 text-lg">
+          <Leaf className="w-6 h-6 text-green-600" />
+          <span className="font-extrabold text-green-600 text-base">
             The Veggie Brothers
           </span>
         </div>
-        <div className="text-gray-500 text-sm text-center md:text-left">
-          &copy; {new Date().getFullYear()} The Veggie Brothers. All rights
-          reserved.
-        </div>
         <div className="flex gap-4">
           <a
-            href="mailto:hello@veggiebrothers.co.za"
+            href="https://www.facebook.com/Veggiebrotherspta"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
             className="text-green-600 hover:text-green-800 transition"
           >
-            Contact
+            <Facebook className="w-5 h-5" />
           </a>
           <a
-            href="#"
+            href="https://www.instagram.com/veggie_brothers_pta/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
             className="text-green-600 hover:text-green-800 transition"
           >
-            Privacy Policy
+            <Instagram className="w-5 h-5" />
           </a>
-          <a
-            href="#"
-            className="text-green-600 hover:text-green-800 transition"
-          >
-            Terms
-          </a>
+        </div>
+        <div className="text-gray-400 text-xs text-center md:text-right">
+          &copy; {new Date().getFullYear()} The Veggie Brothers
         </div>
       </div>
     </footer>
