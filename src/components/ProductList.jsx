@@ -17,10 +17,9 @@ import redOnionImg from "../assets/images/red-onion.png";
 import lemonImg from "../assets/images/lemon.png";
 import broccoliImg from "../assets/images/broccoli.png";
 import pineappleImg from "../assets/images/pineapple.png";
-import { Leaf } from "lucide-react"; // Decorative icon
+import { Leaf } from "lucide-react";
 
-function ProductList({ onAddToCart }) {
-  // Sample product data
+function ProductList({ onAddToCart, category = "all", search = "" }) {
   const products = [
     {
       id: 1,
@@ -29,6 +28,7 @@ function ProductList({ onAddToCart }) {
       image: avocadoImg,
       unitText: "each",
       description: "Fresh and creamy avocados perfect for salads or toast.",
+      category: "fruit",
     },
     {
       id: 2,
@@ -37,6 +37,7 @@ function ProductList({ onAddToCart }) {
       image: spinachImg,
       unitText: "per bunch",
       description: "Organic spinach, rich in vitamins and minerals.",
+      category: "vegetable",
     },
     {
       id: 3,
@@ -45,6 +46,7 @@ function ProductList({ onAddToCart }) {
       image: strawberryImg,
       unitText: "per kg",
       description: "Juicy and sweet strawberries, perfect for desserts.",
+      category: "fruit",
     },
     {
       id: 4,
@@ -53,6 +55,7 @@ function ProductList({ onAddToCart }) {
       image: tomatoImg,
       unitText: "per kg",
       description: "Fresh tomatoes, ideal for sauces and salads.",
+      category: "vegetable",
     },
     {
       id: 5,
@@ -61,6 +64,7 @@ function ProductList({ onAddToCart }) {
       image: bananaImg,
       unitText: "per kg",
       description: "Sweet and ripe bananas.",
+      category: "fruit",
     },
     {
       id: 6,
@@ -69,6 +73,7 @@ function ProductList({ onAddToCart }) {
       image: peachImg,
       unitText: "each",
       description: "Succulent peaches, perfect for snacking.",
+      category: "fruit",
     },
     {
       id: 7,
@@ -78,6 +83,7 @@ function ProductList({ onAddToCart }) {
       unitText: "per punnet",
       description:
         "Plump, antioxidant-rich blueberries for breakfast or baking.",
+      category: "fruit",
     },
     {
       id: 8,
@@ -87,6 +93,7 @@ function ProductList({ onAddToCart }) {
       unitText: "per bag",
       description:
         "Crunchy and sweet baby carrots, great for snacks or salads.",
+      category: "vegetable",
     },
     {
       id: 9,
@@ -96,6 +103,7 @@ function ProductList({ onAddToCart }) {
       unitText: "each",
       description:
         "Crisp and vibrant red peppers, perfect for roasting or salads.",
+      category: "vegetable",
     },
     {
       id: 10,
@@ -104,6 +112,7 @@ function ProductList({ onAddToCart }) {
       image: cucumberImg,
       unitText: "each",
       description: "Long, seedless cucumbers, ideal for fresh salads.",
+      category: "vegetable",
     },
     {
       id: 11,
@@ -113,6 +122,7 @@ function ProductList({ onAddToCart }) {
       unitText: "per bunch",
       description:
         "Aromatic basil leaves, perfect for pesto and Italian dishes.",
+      category: "herb",
     },
     {
       id: 12,
@@ -121,6 +131,7 @@ function ProductList({ onAddToCart }) {
       image: cherryTomatoImg,
       unitText: "per punnet",
       description: "Sweet cherry tomatoes, great for snacking or salads.",
+      category: "vegetable",
     },
     {
       id: 14,
@@ -129,6 +140,7 @@ function ProductList({ onAddToCart }) {
       image: greenBeansImg,
       unitText: "per 500g",
       description: "Tender green beans, delicious steamed or stir-fried.",
+      category: "vegetable",
     },
     {
       id: 15,
@@ -137,6 +149,7 @@ function ProductList({ onAddToCart }) {
       image: corianderImg,
       unitText: "per bunch",
       description: "Fresh coriander, essential for curries and salsas.",
+      category: "herb",
     },
     {
       id: 16,
@@ -145,6 +158,7 @@ function ProductList({ onAddToCart }) {
       image: redOnionImg,
       unitText: "each",
       description: "Mild and sweet red onions, great raw or cooked.",
+      category: "vegetable",
     },
     {
       id: 17,
@@ -153,6 +167,7 @@ function ProductList({ onAddToCart }) {
       image: lemonImg,
       unitText: "each",
       description: "Juicy lemons, perfect for zesting or fresh lemonade.",
+      category: "fruit",
     },
     {
       id: 18,
@@ -161,6 +176,7 @@ function ProductList({ onAddToCart }) {
       image: broccoliImg,
       unitText: "per head",
       description: "Fresh broccoli, packed with nutrients and flavor.",
+      category: "vegetable",
     },
     {
       id: 20,
@@ -169,8 +185,21 @@ function ProductList({ onAddToCart }) {
       image: pineappleImg,
       unitText: "each",
       description: "Sweet and tangy pineapple, great for desserts or juicing.",
+      category: "fruit",
     },
   ];
+
+  // Normalize category for filtering
+  const normalizedCategory = category === "veg" ? "vegetable" : category;
+
+  const filteredProducts = products.filter((product) => {
+    const matchesCategory =
+      normalizedCategory === "all" || product.category === normalizedCategory;
+    const matchesSearch = product.name
+      .toLowerCase()
+      .includes(search.trim().toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <section
@@ -190,13 +219,19 @@ function ProductList({ onAddToCart }) {
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-        {products.map((product) => (
-          <Product
-            key={product.id}
-            product={product}
-            onAddToCart={onAddToCart}
-          />
-        ))}
+        {filteredProducts.length === 0 ? (
+          <div className="col-span-full text-center text-gray-500 text-lg py-12">
+            No products found.
+          </div>
+        ) : (
+          filteredProducts.map((product) => (
+            <Product
+              key={product.id}
+              product={product}
+              onAddToCart={onAddToCart}
+            />
+          ))
+        )}
       </div>
     </section>
   );

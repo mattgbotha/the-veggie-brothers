@@ -4,11 +4,14 @@ import Header from "./Header";
 import ProductList from "./ProductList";
 import Cart from "./Cart";
 import UnderConstruction from "./UnderConstruction";
+import ProductFilters from "./ProductFilters";
 
 function Home() {
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [showUnderConstruction, setShowUnderConstruction] = useState(false);
+  const [category, setCategory] = useState("all");
+  const [search, setSearch] = useState("");
   const headerRef = useRef();
 
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
@@ -134,7 +137,19 @@ function Home() {
         </svg>
       </section>
 
-      <ProductList onAddToCart={handleAddToCart} />
+      <ProductFilters
+        category={category}
+        setCategory={setCategory}
+        search={search}
+        setSearch={setSearch}
+      />
+
+      <ProductList
+        onAddToCart={handleAddToCart}
+        category={category}
+        search={search}
+      />
+
       <Cart
         cart={cart}
         onUpdateQuantity={handleUpdateQuantity}
