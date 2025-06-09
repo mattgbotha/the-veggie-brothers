@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, forwardRef, useImperativeHandle } from "react";
 import {
   ShoppingCart,
   Leaf,
@@ -11,53 +11,25 @@ import {
   Mail,
 } from "lucide-react";
 
-function useActiveSection(sectionIds, offset = 80) {
-  const [activeSection, setActiveSection] = useState("home");
-
-  useEffect(() => {
-    const observers = [];
-    sectionIds.forEach(({ id, name }) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      const observer = new window.IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) setActiveSection(name);
-        },
-        {
-          root: null,
-          rootMargin: `-${offset}px 0px 0px 0px`,
-          threshold: 0.2,
-        }
-      );
-      observer.observe(el);
-      observers.push(observer);
-    });
-
-    // Home section: top of page
-    const onScroll = () => {
-      if (window.scrollY < 100) setActiveSection("home");
-    };
-    window.addEventListener("scroll", onScroll);
-
-    return () => {
-      observers.forEach((o) => o.disconnect());
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, [sectionIds, offset]);
-
-  return activeSection;
-}
-
-function Header({ cartCount, onCartClick, onProductsClick, onHomeClick }) {
+const Header = forwardRef(function Header(
+  {
+    cartCount,
+    onCartClick,
+    onProductsClick,
+    onHomeClick,
+    onHowItWorksClick,
+    onAboutUsClick,
+    onContactClick,
+  },
+  ref
+) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeNav, setActiveNav] = useState("home");
 
-  // Track which section is active
-  const activeSection = useActiveSection([
-    { id: "product-list", name: "products" },
-    { id: "how-it-works", name: "how-it-works" },
-    { id: "about-us", name: "about-us" },
-    { id: "contact", name: "contact" },
-  ]);
+  // Expose setActiveNav to parent via ref
+  useImperativeHandle(ref, () => ({
+    setActiveNav,
+  }));
 
   // Nav link data
   const navLinks = [
@@ -65,70 +37,85 @@ function Header({ cartCount, onCartClick, onProductsClick, onHomeClick }) {
       label: "Home",
       href: "#",
       icon: <HomeIcon className="w-4 h-4 mr-2" />,
-      match: () => activeSection === "home",
-      onClick: onHomeClick,
+      onClick: (e) => {
+        e.preventDefault();
+        setActiveNav("home");
+        onHomeClick && onHomeClick(e);
+        if (mobileOpen) setMobileOpen(false);
+      },
+      key: "home",
     },
     {
       label: "Products",
       href: "#product-list",
       icon: <ShoppingBag className="w-4 h-4 mr-2" />,
-      match: () => activeSection === "products",
-      onClick: onProductsClick,
+      onClick: (e) => {
+        e.preventDefault();
+        setActiveNav("products");
+        onProductsClick && onProductsClick(e, setActiveNav);
+        if (mobileOpen) setMobileOpen(false);
+      },
+      key: "products",
     },
     {
       label: "How It Works",
       href: "#how-it-works",
       icon: <Info className="w-4 h-4 mr-2" />,
-      match: () => activeSection === "how-it-works",
+      onClick: (e) => {
+        e.preventDefault();
+        setActiveNav("how-it-works");
+        onHowItWorksClick && onHowItWorksClick(e);
+        if (mobileOpen) setMobileOpen(false);
+      },
+      key: "how-it-works",
     },
     {
       label: "About Us",
       href: "#about-us",
       icon: <Users className="w-4 h-4 mr-2" />,
-      match: () => activeSection === "about-us",
+      onClick: (e) => {
+        e.preventDefault();
+        setActiveNav("about-us");
+        onAboutUsClick && onAboutUsClick(e);
+        if (mobileOpen) setMobileOpen(false);
+      },
+      key: "about-us",
     },
     {
       label: "Contact",
       href: "#contact",
       icon: <Mail className="w-4 h-4 mr-2" />,
-      match: () => activeSection === "contact",
+      onClick: (e) => {
+        e.preventDefault();
+        setActiveNav("contact");
+        onContactClick && onContactClick(e);
+        if (mobileOpen) setMobileOpen(false);
+      },
+      key: "contact",
     },
   ];
 
   // Render nav links (desktop & mobile)
   const renderNavLinks = (isMobile = false) =>
-    navLinks.map((link) => {
-      const isActive = link.match();
-      return (
-        <a
-          key={link.href}
-          href={link.href}
-          onClick={
-            link.onClick
-              ? (e) => {
-                  e.preventDefault();
-                  link.onClick(e);
-                  if (isMobile) setMobileOpen(false);
-                }
-              : isMobile
-              ? () => setMobileOpen(false)
-              : undefined
-          }
-          className={`flex items-center ${
-            isMobile
-              ? "text-base font-semibold px-2 py-2 rounded"
-              : "px-3 py-2 rounded-lg font-semibold"
-          } transition ${
-            isActive
-              ? "bg-green-100 text-green-700"
-              : "text-gray-700 hover:text-green-700 hover:bg-green-50"
-          }`}
-        >
-          {link.icon}
-          {link.label}
-        </a>
-      );
-    });
+    navLinks.map((link) => (
+      <a
+        key={link.key}
+        href={link.href}
+        onClick={link.onClick}
+        className={`flex items-center ${
+          isMobile
+            ? "text-base font-semibold px-2 py-2 rounded"
+            : "px-3 py-2 rounded-lg font-semibold"
+        } transition ${
+          activeNav === link.key
+            ? "bg-green-100 text-green-700"
+            : "text-gray-700 hover:text-green-700 hover:bg-green-50"
+        }`}
+      >
+        {link.icon}
+        {link.label}
+      </a>
+    ));
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-md">
@@ -202,6 +189,6 @@ function Header({ cartCount, onCartClick, onProductsClick, onHomeClick }) {
       )}
     </header>
   );
-}
+});
 
 export default Header;

@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Clock, Truck, BadgeCheck, ShoppingBag, Info } from "lucide-react";
 import Header from "./Header";
 import ProductList from "./ProductList";
 import Cart from "./Cart";
-import heroImg from "../assets/images/hero-produce.jpg";
+import UnderConstruction from "./UnderConstruction";
 
 function Home() {
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [showUnderConstruction, setShowUnderConstruction] = useState(false);
+  const headerRef = useRef();
 
   const handleAddToCart = (product) => {
     setCart((prevCart) => {
@@ -50,13 +52,14 @@ function Home() {
     setIsCartOpen(false);
   };
 
-  // Smooth scroll handler for "Shop Now" and Products nav link
   const handleShopNowClick = (e) => {
     e.preventDefault();
     const section = document.getElementById("product-list");
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
     }
+    // Set Products as active in the navbar
+    headerRef.current?.setActiveNav("products");
   };
 
   const handleHomeClick = (e) => {
@@ -64,15 +67,28 @@ function Home() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const handleShowUnderConstruction = (e) => {
+    e.preventDefault();
+    setShowUnderConstruction(true);
+  };
+
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+
+  if (showUnderConstruction) {
+    return <UnderConstruction />;
+  }
 
   return (
     <div className="min-h-screen bg-green-50">
       <Header
+        ref={headerRef}
         cartCount={cartCount}
         onCartClick={handleToggleCart}
         onProductsClick={handleShopNowClick}
         onHomeClick={handleHomeClick}
+        onHowItWorksClick={handleShowUnderConstruction}
+        onAboutUsClick={handleShowUnderConstruction}
+        onContactClick={handleShowUnderConstruction}
       />
 
       {/* Hero Section */}
@@ -86,7 +102,7 @@ function Home() {
               <p className="text-xl text-green-100 mb-6">
                 Bringing the market to your door—fresh, fast, and local.
               </p>
-              <div className="mb-4 flex flex-col sm:flex-row gap-2 justify-center md:justify-start">
+              <div className="mb-6 flex flex-col sm:flex-row gap-2 justify-center md:justify-start">
                 <span className="inline-flex items-center bg-green-100 text-green-800 font-semibold px-4 py-1 rounded-full text-sm shadow">
                   <BadgeCheck className="w-4 h-4 mr-2" />
                   100% Fresh Guarantee
@@ -111,6 +127,7 @@ function Home() {
                 </a>
                 <a
                   href="#how-it-works"
+                  onClick={handleShowUnderConstruction}
                   className="inline-flex items-center justify-center border border-white text-white font-bold px-8 py-3 rounded-lg shadow hover:bg-white/10 transition"
                 >
                   <Info className="w-5 h-5 mr-2" />
@@ -118,17 +135,9 @@ function Home() {
                 </a>
               </div>
             </div>
-            <div className="flex-1 flex justify-center mt-8 md:mt-0">
-              <div className="w-full max-w-xl aspect-[4/3] bg-white rounded-3xl shadow-2xl border-2 border-white flex items-center justify-center overflow-hidden">
-                <img
-                  src={heroImg}
-                  alt="Fresh produce"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
           </div>
         </div>
+
         {/* SVG Wave */}
         <svg
           className="absolute left-0 bottom-0 w-full h-16 md:h-24"
