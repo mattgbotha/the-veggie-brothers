@@ -15,8 +15,11 @@ This is a React web app built with [Vite](https://vitejs.dev/) and styled using 
 
 - 🛒 Add-to-cart functionality
 - 🥗 Display of fresh produce with clean UI
-- 🌿 Tailwind-based design (responsive layout loading...)
+- 🌿 Tailwind-based design (fully responsive layout in progress...)
 - 🧺 Cart view — A dedicated window to view and manage cart items and place orders.
+- 📦 Produce categories — Organised by groups (Fruits, Vegetables, and Herbs).
+- 🔍 Product search and filtering — Search bar and category filters.
+- 📝 Product detail pages — Dedicated pages for each item.
 
 ---
 
@@ -44,14 +47,11 @@ Open http://localhost:5173 in your browser to view the app.
 
 ## 💡 Roadmap
 
-- 🔍 Product search and filtering — Search bar and filters (e.g., by type, availability, price).
-- 📦 Produce categories — Organised by groups like Fruits, Vegetables, and Herbs.
 - 🌐 Backend integration — Connect to a database for real-time inventory, pricing, and user data.
-- 📱 Mobile-friendly design — Fully responsive layout for seamless use on phones and tablets.
+- 📱 Mobile-friendly design — Fully responsive layout for seamless use on phones and tablets (in progress).
 - 🔐 User authentication — Allow users to sign up, log in, and track orders.
 - 💳 Payment integration — Handle real transactions.
 - 📍 Delivery tracking — Show delivery progress or estimated arrival times.
-- 📝 Product detail pages — Dedicated pages for each item.
 - 🌟 Favorites & recommendations — Users can save favorites and get personalised suggestions.
 - 🛠️ Admin dashboard — Manage inventory, orders, and customer accounts from a secure interface.
 - 🧪 Unit & integration tests — Ensure the app stays reliable as features grow.
