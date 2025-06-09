@@ -4,10 +4,10 @@ import Header from "./Header";
 import ProductList from "./ProductList";
 import Cart from "./Cart";
 import UnderConstruction from "./UnderConstruction";
-import ProductFilters from "./ProductFilters";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 function Home() {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useLocalStorage("cart", []);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [showUnderConstruction, setShowUnderConstruction] = useState(false);
   const [category, setCategory] = useState("all");
