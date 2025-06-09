@@ -137,13 +137,6 @@ function Home() {
         </svg>
       </section>
 
-      <ProductFilters
-        category={category}
-        setCategory={setCategory}
-        search={search}
-        setSearch={setSearch}
-      />
-
       <ProductList
         onAddToCart={handleAddToCart}
         category={category}

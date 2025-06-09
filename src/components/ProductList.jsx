@@ -1,4 +1,5 @@
 import Product from "./Product";
+import { Leaf, Search } from "lucide-react";
 import avocadoImg from "../assets/images/avocado.png";
 import spinachImg from "../assets/images/spinach.png";
 import strawberryImg from "../assets/images/strawberries.png";
@@ -17,9 +18,23 @@ import redOnionImg from "../assets/images/red-onion.png";
 import lemonImg from "../assets/images/lemon.png";
 import broccoliImg from "../assets/images/broccoli.png";
 import pineappleImg from "../assets/images/pineapple.png";
-import { Leaf } from "lucide-react";
+import { useState } from "react";
 
-function ProductList({ onAddToCart, category = "all", search = "" }) {
+function ProductList({
+  onAddToCart,
+  category: initialCategory = "all",
+  search: initialSearch = "",
+}) {
+  const [category, setCategory] = useState(initialCategory);
+  const [search, setSearch] = useState(initialSearch);
+
+  const categories = [
+    { key: "all", label: "All" },
+    { key: "fruit", label: "Fruits" },
+    { key: "veg", label: "Vegetables" },
+    { key: "herb", label: "Herbs" },
+  ];
+
   const products = [
     {
       id: 1,
@@ -189,7 +204,6 @@ function ProductList({ onAddToCart, category = "all", search = "" }) {
     },
   ];
 
-  // Normalize category for filtering
   const normalizedCategory = category === "veg" ? "vegetable" : category;
 
   const filteredProducts = products.filter((product) => {
@@ -204,20 +218,87 @@ function ProductList({ onAddToCart, category = "all", search = "" }) {
   return (
     <section
       id="product-list"
-      className="scroll-mt-14 bg-gray-50 px-8 py-8 sm:py-12"
+      className="scroll-mt-14 bg-gray-50 px-4 py-8 sm:py-12"
     >
-      <div className="mb-8 text-center">
-        <div className="flex justify-center mb-2">
-          <Leaf className="w-8 h-8 text-green-600 animate-bounce" />
+      {/* Filters + Heading Row */}
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-8">
+        {/* Heading center */}
+        <div className="flex flex-col items-center md:order-2 flex-1">
+          <div className="flex justify-center mb-2">
+            <Leaf className="w-8 h-8 text-green-600 animate-bounce" />
+          </div>
+          <h2 className="text-3xl font-extrabold text-green-600 tracking-tight animate-fade-in-down transition-all duration-700">
+            Discover Our Freshest Picks
+          </h2>
+          <div className="mx-auto mt-2 mb-2 h-1 w-20 rounded bg-green-500"></div>
+          <p className="text-base text-gray-500 text-center">
+            Hand-selected fruits, veggies, and herbs delivered to your door.
+          </p>
+          {/* Categories below description, centered on mobile */}
+          <div className="flex flex-wrap gap-2 justify-center mt-4 md:hidden">
+            {categories.map((cat) => (
+              <button
+                key={cat.key}
+                className={`px-4 py-1.5 rounded-full text-sm font-semibold border transition-all duration-150 shadow-sm
+                  ${
+                    category === cat.key
+                      ? "bg-gradient-to-r from-green-500 to-emerald-500 text-white border-green-600 shadow-md scale-105"
+                      : "bg-white text-green-700 border-green-200 hover:bg-green-50"
+                  }
+                `}
+                style={{
+                  letterSpacing: "0.02em",
+                  boxShadow:
+                    category === cat.key
+                      ? "0 2px 8px 0 rgba(16,185,129,0.10)"
+                      : undefined,
+                }}
+                onClick={() => setCategory(cat.key)}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
         </div>
-        <h2 className="text-3xl font-extrabold text-green-600 tracking-tight animate-fade-in-down transition-all duration-700">
-          Discover Our Freshest Picks
-        </h2>
-        <div className="mx-auto mt-2 mb-2 h-1 w-20 rounded bg-green-500"></div>
-        <p className="text-base text-gray-500">
-          Hand-selected fruits, veggies, and herbs delivered to your door.
-        </p>
+        {/* Categories left on desktop */}
+        <div className="hidden md:flex flex-wrap gap-2 md:order-1 ml-8">
+          {categories.map((cat) => (
+            <button
+              key={cat.key}
+              className={`px-4 py-1.5 rounded-full text-sm font-semibold border transition-all duration-150 shadow-sm
+                ${
+                  category === cat.key
+                    ? "bg-gradient-to-r from-green-500 to-emerald-500 text-white border-green-600 shadow-md scale-105"
+                    : "bg-white text-green-700 border-green-200 hover:bg-green-50"
+                }
+              `}
+              style={{
+                letterSpacing: "0.02em",
+                boxShadow:
+                  category === cat.key
+                    ? "0 2px 8px 0 rgba(16,185,129,0.10)"
+                    : undefined,
+              }}
+              onClick={() => setCategory(cat.key)}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+        {/* Search right */}
+        <div className="relative w-full md:w-80 md:order-3 md:mr-8">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-green-400 w-5 h-5 pointer-events-none" />
+          <input
+            type="text"
+            placeholder="Search for fresh produce..."
+            className="w-full pl-12 pr-4 py-2 rounded-full border border-green-200 bg-white focus:outline-none focus:ring-2 focus:ring-green-400 text-gray-800 placeholder:text-green-400 shadow-sm transition"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            autoComplete="off"
+          />
+        </div>
       </div>
+      {/* Products grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         {filteredProducts.length === 0 ? (
           <div className="col-span-full text-center text-gray-500 text-lg py-12">
