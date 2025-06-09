@@ -11,60 +11,46 @@ function Home() {
   const [showUnderConstruction, setShowUnderConstruction] = useState(false);
   const headerRef = useRef();
 
-  const handleAddToCart = (product) => {
-    setCart((prevCart) => {
-      const existingItem = prevCart.find((item) => item.id === product.id);
+  const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
-      if (existingItem) {
-        return prevCart.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      } else {
-        return [...prevCart, { ...product, quantity: 1 }];
-      }
+  const handleAddToCart = (product) => {
+    setCart((prev) => {
+      const existing = prev.find((item) => item.id === product.id);
+      return existing
+        ? prev.map((item) =>
+            item.id === product.id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          )
+        : [...prev, { ...product, quantity: 1 }];
     });
   };
 
-  const handleToggleCart = () => {
-    setIsCartOpen(!isCartOpen);
-  };
-
   const handleUpdateQuantity = (productId, newQuantity) => {
-    if (newQuantity === 0) {
-      handleRemoveItem(productId);
-      return;
-    }
-
-    setCart((prevCart) =>
-      prevCart.map((item) =>
+    if (newQuantity === 0) return handleRemoveItem(productId);
+    setCart((prev) =>
+      prev.map((item) =>
         item.id === productId ? { ...item, quantity: newQuantity } : item
       )
     );
   };
 
   const handleRemoveItem = (productId) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
-  };
-
-  const handleCloseCart = () => {
-    setIsCartOpen(false);
+    setCart((prev) => prev.filter((item) => item.id !== productId));
   };
 
   const handleShopNowClick = (e) => {
     e.preventDefault();
-    const section = document.getElementById("product-list");
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
-    // Set Products as active in the navbar
+    document
+      .getElementById("product-list")
+      ?.scrollIntoView({ behavior: "smooth" });
     headerRef.current?.setActiveNav("products");
   };
 
   const handleHomeClick = (e) => {
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: "smooth" });
+    headerRef.current?.setActiveNav("home");
   };
 
   const handleShowUnderConstruction = (e) => {
@@ -72,18 +58,14 @@ function Home() {
     setShowUnderConstruction(true);
   };
 
-  const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
-
-  if (showUnderConstruction) {
-    return <UnderConstruction />;
-  }
+  if (showUnderConstruction) return <UnderConstruction />;
 
   return (
     <div className="min-h-screen bg-green-50">
       <Header
         ref={headerRef}
         cartCount={cartCount}
-        onCartClick={handleToggleCart}
+        onCartClick={() => setIsCartOpen((open) => !open)}
         onProductsClick={handleShopNowClick}
         onHomeClick={handleHomeClick}
         onHowItWorksClick={handleShowUnderConstruction}
@@ -94,7 +76,7 @@ function Home() {
       {/* Hero Section */}
       <section className="relative pb-0">
         <div className="bg-gradient-to-r from-green-500 to-emerald-600 w-full pt-16 pb-24 px-4">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center md:text-left text-center">
+          <div className="max-w-7xl mx-auto flex flex-col items-center md:text-left text-center">
             <div className="flex-1">
               <h1 className="text-5xl font-extrabold mb-4 drop-shadow-lg text-white">
                 Farm Fresh Delivered
@@ -137,7 +119,6 @@ function Home() {
             </div>
           </div>
         </div>
-
         {/* SVG Wave */}
         <svg
           className="absolute left-0 bottom-0 w-full h-16 md:h-24"
@@ -159,7 +140,7 @@ function Home() {
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveItem}
         isOpen={isCartOpen}
-        onClose={handleCloseCart}
+        onClose={() => setIsCartOpen(false)}
       />
     </div>
   );

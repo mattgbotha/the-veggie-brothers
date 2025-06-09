@@ -26,12 +26,10 @@ const Header = forwardRef(function Header(
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeNav, setActiveNav] = useState("home");
 
-  // Expose setActiveNav to parent via ref
   useImperativeHandle(ref, () => ({
     setActiveNav,
   }));
 
-  // Nav link data
   const navLinks = [
     {
       label: "Home",
@@ -52,7 +50,7 @@ const Header = forwardRef(function Header(
       onClick: (e) => {
         e.preventDefault();
         setActiveNav("products");
-        onProductsClick && onProductsClick(e, setActiveNav);
+        onProductsClick && onProductsClick(e);
         if (mobileOpen) setMobileOpen(false);
       },
       key: "products",
@@ -95,7 +93,6 @@ const Header = forwardRef(function Header(
     },
   ];
 
-  // Render nav links (desktop & mobile)
   const renderNavLinks = (isMobile = false) =>
     navLinks.map((link) => (
       <a

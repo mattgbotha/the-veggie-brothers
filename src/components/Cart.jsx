@@ -36,9 +36,7 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
         className="absolute inset-0 bg-black"
         style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
         onClick={onClose}
-      ></div>
-
-      {/* Cart Panel */}
+      />
       <div
         className={`
           absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-xl flex flex-col
@@ -46,7 +44,6 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
           ${animateIn ? "translate-x-0" : "translate-x-full"}
         `}
       >
-        {/* Cart Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
           <h2 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
             <ShoppingBag className="w-5 h-5" />
@@ -59,8 +56,6 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
             <X className="w-5 h-5 text-gray-500" />
           </button>
         </div>
-
-        {/* Cart Content */}
         <div className="flex-1 flex flex-col">
           {cart.length === 0 ? (
             <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
@@ -73,7 +68,7 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
               </p>
               <button
                 onClick={onClose}
-                className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-medium transition-colors cursor-pointer shadow-md"
+                className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-medium transition-colors shadow-md cursor-pointer"
               >
                 Continue Shopping
               </button>
@@ -86,14 +81,11 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
                     key={item.id}
                     className="flex items-center space-x-3 bg-gray-50 rounded-lg p-3"
                   >
-                    {/* Product Image */}
                     <img
                       src={item.image}
                       alt={item.name}
                       className="w-12 h-12 object-contain rounded-lg bg-white"
                     />
-
-                    {/* Product Info */}
                     <div className="flex-1">
                       <h4 className="font-medium text-gray-900 text-sm">
                         {item.name}
@@ -102,33 +94,22 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
                         R{(item.price * item.quantity).toFixed(2)}
                       </p>
                     </div>
-
                     <div className="flex items-center space-x-1">
-                      {/* Minus Button */}
                       <button
-                        onClick={() => {
-                          onUpdateQuantity(item.id, item.quantity - 1);
-                        }}
-                        className="w-6 h-6 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                        onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
+                        className="w-6 h-6 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors disabled:opacity-50 cursor-pointer"
                       >
                         <Minus className="w-3 h-3 text-gray-600" />
                       </button>
-
                       <span className="w-6 text-center font-medium text-gray-900 text-sm">
                         {item.quantity}
                       </span>
-
-                      {/* Plus Button */}
                       <button
-                        onClick={() => {
-                          onUpdateQuantity(item.id, item.quantity + 1);
-                        }}
-                        className="w-6 h-6 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                        onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
+                        className="w-6 h-6 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center transition-colors cursor-pointer"
                       >
                         <Plus className="w-3 h-3 text-white" />
                       </button>
-
-                      {/* Remove Button */}
                       <button
                         onClick={() => onRemoveItem(item.id)}
                         className="w-6 h-6 rounded-full bg-red-100 hover:bg-red-200 flex items-center justify-center transition-colors ml-2 cursor-pointer"
@@ -139,8 +120,6 @@ function Cart({ cart, onUpdateQuantity, onRemoveItem, isOpen, onClose }) {
                   </div>
                 ))}
               </div>
-
-              {/* Total Section */}
               <div className="border-t border-gray-200 p-4">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-gray-700 font-medium">Total</span>
