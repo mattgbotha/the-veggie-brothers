@@ -4,43 +4,16 @@ import Header from "./Header";
 import ProductList from "./ProductList";
 import Cart from "./Cart";
 import UnderConstruction from "./UnderConstruction";
-import useLocalStorage from "../hooks/useLocalStorage";
+import useCart from "../hooks/useCart";
 
 function Home() {
-  const [cart, setCart] = useLocalStorage("cart", []);
+  const { cart, addToCart, updateQuantity, removeItem, cartCount } = useCart();
+
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [showUnderConstruction, setShowUnderConstruction] = useState(false);
   const [category, setCategory] = useState("all");
   const [search, setSearch] = useState("");
   const headerRef = useRef();
-
-  const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
-
-  const handleAddToCart = (product) => {
-    setCart((prev) => {
-      const existing = prev.find((item) => item.id === product.id);
-      return existing
-        ? prev.map((item) =>
-            item.id === product.id
-              ? { ...item, quantity: item.quantity + 1 }
-              : item
-          )
-        : [...prev, { ...product, quantity: 1 }];
-    });
-  };
-
-  const handleUpdateQuantity = (productId, newQuantity) => {
-    if (newQuantity === 0) return handleRemoveItem(productId);
-    setCart((prev) =>
-      prev.map((item) =>
-        item.id === productId ? { ...item, quantity: newQuantity } : item
-      )
-    );
-  };
-
-  const handleRemoveItem = (productId) => {
-    setCart((prev) => prev.filter((item) => item.id !== productId));
-  };
 
   const handleShopNowClick = (e) => {
     e.preventDefault();
@@ -138,15 +111,15 @@ function Home() {
       </section>
 
       <ProductList
-        onAddToCart={handleAddToCart}
+        onAddToCart={addToCart}
         category={category}
         search={search}
       />
 
       <Cart
         cart={cart}
-        onUpdateQuantity={handleUpdateQuantity}
-        onRemoveItem={handleRemoveItem}
+        onUpdateQuantity={updateQuantity}
+        onRemoveItem={removeItem}
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
       />

@@ -1,26 +1,27 @@
 import { Plus } from "lucide-react";
 
-function Product({ product, onAddToCart }) {
-  const { name, price, image, unitText, description } = product;
-
+function Product({ product, onAddToCart, onView }) {
   return (
-    <div className="bg-white rounded-2xl p-4 shadow-md border border-gray-100 flex flex-col items-center hover:shadow-lg transition-shadow duration-200 group">
+    <div
+      className="bg-white rounded-xl shadow p-4 flex flex-col items-center hover:shadow-lg transition cursor-pointer"
+      onClick={() => onView && onView(product)}
+    >
       <img
-        src={image}
-        alt={name}
-        className="w-32 h-32 object-contain rounded-xl mb-3 bg-white group-hover:scale-110 transition-transform duration-200"
+        src={product.image}
+        alt={product.name}
+        className="w-24 h-24 object-contain mb-2"
       />
-      <h3 className="text-lg font-semibold text-gray-900 text-center">
-        {name}
-      </h3>
-      <p className="text-green-600 font-bold text-xl mt-1">R{price}</p>
-      <p className="text-gray-500 text-sm mb-1">{unitText && `${unitText}`}</p>
-      {description && (
-        <p className="text-gray-400 text-xs text-center mb-3">{description}</p>
-      )}
+      <h4 className="font-bold text-green-700">{product.name}</h4>
+      <div className="text-green-600 font-semibold mb-1">
+        R{product.price}{" "}
+        <span className="text-gray-500 text-xs">{product.unitText}</span>
+      </div>
       <button
-        onClick={() => onAddToCart(product)}
-        className="mt-auto w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-lg flex items-center justify-center gap-2 transition-colors shadow cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+        className="mt-2 px-4 py-1 bg-green-500 text-white rounded-full text-sm font-semibold hover:bg-green-600 inline-flex items-center gap-2 cursor-pointer transition-colors shadow-sm"
+        onClick={(e) => {
+          e.stopPropagation();
+          onAddToCart(product);
+        }}
       >
         <Plus className="w-5 h-5" />
         Add to Cart

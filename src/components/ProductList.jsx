@@ -18,6 +18,7 @@ import redOnionImg from "../assets/images/red-onion.png";
 import lemonImg from "../assets/images/lemon.png";
 import broccoliImg from "../assets/images/broccoli.png";
 import pineappleImg from "../assets/images/pineapple.png";
+import ProductModal from "./ProductModal";
 import { useState } from "react";
 
 function ProductList({
@@ -27,6 +28,7 @@ function ProductList({
 }) {
   const [category, setCategory] = useState(initialCategory);
   const [search, setSearch] = useState(initialSearch);
+  const [modalProduct, setModalProduct] = useState(null);
 
   const categories = [
     { key: "all", label: "All" },
@@ -215,6 +217,9 @@ function ProductList({
     return matchesCategory && matchesSearch;
   });
 
+  const handleProductClick = (product) => setModalProduct(product);
+  const handleCloseModal = () => setModalProduct(null);
+
   return (
     <section
       id="product-list"
@@ -310,10 +315,17 @@ function ProductList({
               key={product.id}
               product={product}
               onAddToCart={onAddToCart}
+              onView={() => handleProductClick(product)}
             />
           ))
         )}
       </div>
+      <ProductModal
+        product={modalProduct}
+        open={!!modalProduct}
+        onClose={handleCloseModal}
+        onAddToCart={onAddToCart}
+      />
     </section>
   );
 }
